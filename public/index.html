@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <link href='https://fonts.googleapis.com/css?family=Anton' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Anton' rel='stylesheet'>
+    <style>
+        .background {
+          width: 100%;
+          height: 100%;
+          background: url('close-up-hands-counting-money.jpg') no-repeat center center, rgba(0, 0, 0, 0.5); /* Image and color */
+          background-blend-mode: overlay; /* Adjust blend mode as needed */
+          background-size: cover;
+        }
+      
+        .content {
+          color: white;
+          text-align: center;
+          padding-top: 20%;
+        }
+        .font {
+            font-family: 'Anton';font-size: 22px;
+        }
+        .font2{
+            font-family: 'Urbanist';font-size: 20px;
+        }
+      </style>
+</head>
+<body class="background">
+    <header>
+        <nav>
+            <a href="/home">Home</a>
+            <a href="/add_expense">Add Expense</a>
+            <a href="/view_expense">View Expenses</a>
+            <a href="/edit_expense">Edit Expenses</a>
+        </nav>
+    </header>
+    <main>
+        <div id="home" >
+            <h2 class="font" style="color: #EDFF71; font-size: 50px;">Welcome to the Expense Tracker</h2>
+            <p class="font">Track your expenses easily and efficiently</p>
+            <p class="font2">Stop wondering where your money goes!<br>
+                Our free expense tracker app helps you categorize spending, set goals, and gain control of your finances. 
+            </p>
+        </div>
+        <section class="dashboard">
+            <h3>Your Dashboard</h3>
+            <div class="dashboard-cards">
+                <div class="card">
+                    <h4>Total Expenses</h4>
+                    <p>$1200</p>
+                </div>
+                <div class="card">
+                    <h4>Total Income</h4>
+                    <p>$2000</p>
+                </div>
+                <div class="card">
+                    <h4>Balance</h4>
+                    <p>$800</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Expense Tracker</p>
+    </footer>
+</body>
+</html>
