@@ -4,7 +4,7 @@ const path = require('path');
 
 // Route for serving the register page
 router.get('/register', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public', 'register.html'));
+    res.sendFile(path.join(__dirname, '..', '..', 'public', 'register.html'));
 });
 
 // Route for serving the login page

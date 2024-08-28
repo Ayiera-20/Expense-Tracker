@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Expense - Expense Tracker</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <header>
@@ -13,12 +13,11 @@
             <a href="/home">Home</a>
             <a href="/add_expense">Add Expense</a>
             <a href="/view_expense">View Expenses</a>
-            <a href="/edit_expense">Edit Expenses</a>
         </nav>
     </header>
     <main>
-        <section>
-            <h2>View Expenses</h2>
+        <section style="margin-right: 80px;">
+            <h2>Edit Expenses</h2>
             <article>
                 <table>
                     <thead>
@@ -30,8 +29,11 @@
                             <th>Description</th>
                         </tr>
                     </thead>
-                    <tbody id="expenses-table-body">
-                    </tbody>
+                    <form id="expenses-table-form">
+                        <tbody id="expenses-table-body">
+                        </tbody>
+                    </form>
+                    
                 </table>
             </article>
         </section>

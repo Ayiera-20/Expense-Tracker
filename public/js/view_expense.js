@@ -1,7 +1,7 @@
 // Fetch expenses from the backend API
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-        const response = await fetch('/api/expenses');
+        const response = await fetch('/api/get-expenses');
         if (!response.ok) {
             throw new Error('Failed to fetch expenses');
         }

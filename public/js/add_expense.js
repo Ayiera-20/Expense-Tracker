@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
             category,
             amount,
             paymentMethod,
-            description
+            description,
         };
 
         try {
