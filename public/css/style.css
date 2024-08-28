@@ -71,12 +71,14 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+    
 }
 
 table th, table td {
     border: 1px solid #ccc;
     padding: 10px;
     text-align: left;
+    
 }
 
 footer {
@@ -113,6 +115,30 @@ nav a:hover {
     background-color: #EDFF71;
     color: black;
 }
+
+.nav-btn {
+    color: #fff;
+    text-decoration: none;
+    font-family: 'Urbanist', sans-serif;
+    font-size: 18px;
+    padding: 10px 20px;
+    background-color: #333;
+    border-radius: 5px;
+    border: none; 
+    cursor: pointer; 
+    margin-left: 20px; 
+}
+
+.nav-btn:hover {
+    background-color: rgb(164, 2, 2);
+    color: white;
+}
+.header-container {
+    display: flex;
+    align-items: center; 
+    justify-content: space-between; 
+}
+
 
 /* Dashboard Section Styles */
 .dashboard {
@@ -195,5 +221,38 @@ nav a:hover {
 
 
 
+
+
+
+
+/* Example of inline layout for shorter appearance */
+.form-group {
+    display: flex;
+    gap: 10px;
+}
+.form-group div {
+    flex: 1;
+}
+
+/* Collapsible section */
+.collapsible {
+    cursor: pointer;
+    padding: 10px;
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    margin-top: 10px;
+    text-align: left;
+}
+
+.collapsible-content {
+    display: none;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-top: 5px;
+}
+
+.collapsible.active {
+    background-color: #ccc; /* Change color when active */
+}
 
 

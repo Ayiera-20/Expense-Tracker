@@ -4,8 +4,9 @@ const expensesController = require('../controllers/expensesController');  // Imp
 
 // Routes for expense management
 router.post('/api/expenses', expensesController.addExpense);
-router.get('/api/expenses', expensesController.getExpenses);
-router.put('/api/expenses/:expense_id', expensesController.updateExpense);
-router.delete('/api/expenses/:expense_id', expensesController.deleteExpense); 
+router.get('/api/get-expenses', expensesController.getExpenses);
+router.put('/api/update-expense/:expenseId', expensesController.updateExpense);
+router.delete('/api/delete-expense/:expenseId', expensesController.deleteExpense);
+
 
 module.exports = router;
