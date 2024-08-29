@@ -46,7 +46,7 @@ console.log(row.dataset.expenseId);
 
          
               const updateButton = row.querySelector('.btn-save')
-            // const deleteButton = row.querySelector('.btn-delete');
+              const deleteButton = row.querySelector('.btn-delete');
 
 
             // Update functionality
@@ -60,13 +60,25 @@ console.log(row.dataset.expenseId);
                     console.error("Expense ID is undefined");
                     return;
                 }
-                const updatedExpense = {
+                // const updatedExpense = {
+                //     date: row.querySelector('input[data-name="date"]').value,
+                //     category_name: row.querySelector('input[data-name="category_name"]').value,
+                //     amount: row.querySelector('input[data-name="amount"]').value,
+                //     payment_method_name: row.querySelector('input[data-name="payment_method_name"]').value,
+                //     description: row.querySelector('input[data-name="description"]').value,              };
+                //  console.log("updated expense", updatedExpense)
+
+                 const updatedExpense = {
                     date: row.querySelector('input[data-name="date"]').value,
                     category_name: row.querySelector('input[data-name="category_name"]').value,
                     amount: row.querySelector('input[data-name="amount"]').value,
                     payment_method_name: row.querySelector('input[data-name="payment_method_name"]').value,
-                    description: row.querySelector('input[data-name="description"]').value,              };
-                 console.log("updated expense", updatedExpense, updatedExpense.description)
+                    description: row.querySelector('input[data-name="description"]').value,
+                };
+                
+
+                 // Before making the fetch request, log the payload to check its content
+                 console.log('Payload to send:', JSON.stringify(updatedExpense));
             
                 fetch(`/api/update-expense/${expenseId}`, {
                     method: 'PUT',
