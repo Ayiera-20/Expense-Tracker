@@ -110,30 +110,36 @@ console.log(row.dataset.expenseId);
 deleteButton.addEventListener('click', async () => {
     const expenseId = row.dataset.expenseId;
 
-    console.log('Delete ID:', expenseId);
-
     if (!expenseId) {
         console.error("Expense ID is undefined");
         return;
     }
 
-    try {
-        const response = await fetch(`/api/delete-expense/${expenseId}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
+    // Prompt the user for confirmation before deleting
+    const userConfirmed = confirm("Are you sure you want to delete this expense?");
 
-        if (!response.ok) {
-            throw new Error('Failed to delete expense');
+    if (userConfirmed) {
+        try {
+            const response = await fetch(`/api/delete-expense/${expenseId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to delete expense');
+            }
+
+            // Remove the row from the table upon successful deletion
+            tableBody.removeChild(row);
+            alert('Expense deleted successfully!');
+        } catch (error) {
+            console.error('Error deleting expense:', error);
         }
-
-        // Remove the row from the table upon successful deletion
-        tableBody.removeChild(row);
-        alert('Expense deleted successfully!');
-    } catch (error) {
-        console.error('Error deleting expense:', error);
+    } else {
+        // If the user cancels the deletion
+        console.log('User canceled the deletion.');
     }
 });
 
