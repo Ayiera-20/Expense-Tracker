@@ -124,19 +124,34 @@ updateExpense: async (req, res) => {
 deleteExpense: async (req, res) => {
     try {
         const { expenseId } = req.params; // Get expenseId from request params
+        const userId = req.session.userId; // Get userId from the session
+
+        // Check if user is authenticated
+        if (!userId) {
+            return res.status(401).json({ message: 'User not authenticated' });
+        }
+
+        // Check if the expense exists and belongs to the user
+        const [expenseResult] = await db.query(
+            'SELECT expense_id FROM expenses WHERE expense_id = ? AND user_id = ?',
+            [expenseId, userId]
+        );
+
+        if (expenseResult.length === 0) {
+            return res.status(404).json({ message: 'Expense not found' });
+        }
 
         // Delete the expense
-        await db.query(
-            'DELETE FROM expenses WHERE expense_id = ? AND user_id = ?',
-            [expenseId, req.session.userId]
-        );
+        await db.query('DELETE FROM expenses WHERE expense_id = ? AND user_id = ?', [expenseId, userId]);
 
         res.status(200).json({ message: 'Expense deleted successfully' });
     } catch (error) {
-        console.error('Error deleting expense:', error);
+        console.error('Error deleting expense:', error.message);
         res.status(500).json({ message: 'Error deleting expense' });
     }
 },
+
+
 
   
 

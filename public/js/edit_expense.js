@@ -102,25 +102,41 @@ console.log(row.dataset.expenseId);
                 });
             });
             
+// Inside your expenses.forEach loop where you create rows dynamically
 
-            // Delete functionality
-            // deleteButton.addEventListener('click', () => {
-            //     const expenseId = row.dataset.expenseId;
 
-            //     fetch(`/api/delete-expense/${expenseId}`, {
-            //         method: 'DELETE',
-            //     })
-            //     .then(response => {
-            //         if (!response.ok) {
-            //             throw new Error('Failed to delete expense');
-            //         }
-            //         tableBody.removeChild(row);
-            //         alert('Expense deleted successfully!');
-            //     })
-            //     .catch(error => {
-            //         console.error('Error deleting expense:', error);
-            //     });
-            // });
+
+// Delete functionality
+deleteButton.addEventListener('click', async () => {
+    const expenseId = row.dataset.expenseId;
+
+    console.log('Delete ID:', expenseId);
+
+    if (!expenseId) {
+        console.error("Expense ID is undefined");
+        return;
+    }
+
+    try {
+        const response = await fetch(`/api/delete-expense/${expenseId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to delete expense');
+        }
+
+        // Remove the row from the table upon successful deletion
+        tableBody.removeChild(row);
+        alert('Expense deleted successfully!');
+    } catch (error) {
+        console.error('Error deleting expense:', error);
+    }
+});
+
         });
     } catch (error) {
         console.error('Error:', error);
