@@ -19,21 +19,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify({ email, username, password })
             });
 
-            console.log(response);  // Log the full response object for debugging
+            console.log(response);  
 
             if (!response.ok) {
-                const errorData = await response.json(); // Get the error response
-                console.log(errorData);  // Log the error details
+                const errorData = await response.json(); 
+                console.log(errorData);  
                 authMsg.textContent = "User already exists or other error!";
             } else {
-                const data = await response.json();  // Try to parse the response as JSON
-                console.log(data);  // Log the data for debugging
+                const data = await response.json();  
+                console.log(data); 
 
                 authMsg.textContent = "User created successfully!";
-                // Redirect to login page after a delay
                 setTimeout(() => {
-                    window.location.href = '/login';  // Redirects to the login page
-                }, 2000);  // Delay of 2 seconds before redirecting
+                    window.location.href = '/login'; 
+                }, 2000); 
             }
         } catch (err) {
             console.error('An error occurred:', err);  // Log the error to the console

@@ -43,11 +43,10 @@ const expensesController = {
     },
 
 
- // Fetch expenses
      // Fetch all expenses
-     getExpenses: async (req, res) => {
+    getExpenses: async (req, res) => {
         try {
-            const userId = req.session.userId; // Assuming userId is stored in the session after login
+            const userId = req.session.userId; 
             const [expenses] = await db.query(`
                 SELECT e.date, c.category_name, e.amount, pm.payment_method_name, e.description, e.expense_id
                 FROM expenses e
@@ -76,8 +75,6 @@ updateExpense: async (req, res) => {
         if (!expenseId || !date || !category_name || !amount || !payment_method_name || !description) {
             return res.status(400).json({ message: 'Missing required fields' });
         }
-
-        // Check if userId is set in the session
         if (!userId) {
             return res.status(401).json({ message: 'User not authenticated' });
         }
@@ -114,7 +111,7 @@ updateExpense: async (req, res) => {
 
         res.status(200).json({ message: 'Expense updated successfully' });
     } catch (error) {
-        console.error('Error updating expense:', error.message); // Log more specific error message
+        console.error('Error updating expense:', error.message); 
         res.status(500).json({ message: 'Error updating expense' });
     }
 },
@@ -124,9 +121,7 @@ updateExpense: async (req, res) => {
 deleteExpense: async (req, res) => {
     try {
         const { expenseId } = req.params; // Get expenseId from request params
-        const userId = req.session.userId; // Get userId from the session
-
-        // Check if user is authenticated
+        const userId = req.session.userId; 
         if (!userId) {
             return res.status(401).json({ message: 'User not authenticated' });
         }
@@ -150,11 +145,6 @@ deleteExpense: async (req, res) => {
         res.status(500).json({ message: 'Error deleting expense' });
     }
 },
-
-
-
-  
-
 };
 
 

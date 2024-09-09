@@ -19,14 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     body: JSON.stringify({ username, password })
                 });
 
-                const data = await response.json(); // Correctly await the response data
+                const data = await response.json(); 
 
                 if (!response.ok) {
                     authMsg.textContent = data.message || 'Authentication failed';
                 } else {
                     authMsg.textContent = data.message || 'Login successful';
-
-                    // Redirect to index.html after successful login
                     window.location.href = '/home';
                 }
             } catch (err) {

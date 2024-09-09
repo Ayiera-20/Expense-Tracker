@@ -12,15 +12,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Iterate over the expenses and create rows dynamically
         expenses.forEach(expense => {
             const row = document.createElement('tr');
-
-                            console.log('Row', row)
+            console.log('Row', row)
 
             // Store expense_id as a data attribute in the row
             row.dataset.expenseId = expense.expense_id;
-console.log(row.dataset.expenseId);
-
-     
-
+            console.log(row.dataset.expenseId);
             row.innerHTML = `
                 <td><input type="date" data-name='date' value="${new Date(expense.date).toISOString().split('T')[0]}" /></td>
                 <td><input type="text" data-name='category_name' value="${expense.category_name}" /></td>
@@ -33,9 +29,6 @@ console.log(row.dataset.expenseId);
                 </td>
             `;
             tableBody.appendChild(row);
-            // const desc = document.getElementsByName("description")
-            // console.log("description", desc, desc.value)
-
             // Add event listeners for save and delete buttons
             row.querySelectorAll('input').forEach((input) => {
                 input.addEventListener('change', () => {
@@ -44,10 +37,8 @@ console.log(row.dataset.expenseId);
                 })
             }); 
 
-         
-              const updateButton = row.querySelector('.btn-save')
-              const deleteButton = row.querySelector('.btn-delete');
-
+            const updateButton = row.querySelector('.btn-save')
+            const deleteButton = row.querySelector('.btn-delete');
 
             // Update functionality
             updateButton.addEventListener('click', async () => {
@@ -60,15 +51,7 @@ console.log(row.dataset.expenseId);
                     console.error("Expense ID is undefined");
                     return;
                 }
-                // const updatedExpense = {
-                //     date: row.querySelector('input[data-name="date"]').value,
-                //     category_name: row.querySelector('input[data-name="category_name"]').value,
-                //     amount: row.querySelector('input[data-name="amount"]').value,
-                //     payment_method_name: row.querySelector('input[data-name="payment_method_name"]').value,
-                //     description: row.querySelector('input[data-name="description"]').value,              };
-                //  console.log("updated expense", updatedExpense)
-
-                 const updatedExpense = {
+                const updatedExpense = {
                     date: row.querySelector('input[data-name="date"]').value,
                     category_name: row.querySelector('input[data-name="category_name"]').value,
                     amount: row.querySelector('input[data-name="amount"]').value,
@@ -78,7 +61,7 @@ console.log(row.dataset.expenseId);
                 
 
                  // Before making the fetch request, log the payload to check its content
-                 console.log('Payload to send:', JSON.stringify(updatedExpense));
+                console.log('Payload to send:', JSON.stringify(updatedExpense));
             
                 fetch(`/api/update-expense/${expenseId}`, {
                     method: 'PUT',
@@ -102,54 +85,42 @@ console.log(row.dataset.expenseId);
                 });
             });
             
-// Inside your expenses.forEach loop where you create rows dynamically
-
-
 
 // Delete functionality
-deleteButton.addEventListener('click', async () => {
-    const expenseId = row.dataset.expenseId;
+    deleteButton.addEventListener('click', async () => {
+        const expenseId = row.dataset.expenseId;
 
-    if (!expenseId) {
-        console.error("Expense ID is undefined");
-        return;
-    }
-
-    // Prompt the user for confirmation before deleting
-    const userConfirmed = confirm("Are you sure you want to delete this expense?");
-
-    if (userConfirmed) {
-        try {
-            const response = await fetch(`/api/delete-expense/${expenseId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to delete expense');
-            }
-
-            // Remove the row from the table upon successful deletion
-            tableBody.removeChild(row);
-            alert('Expense deleted successfully!');
-        } catch (error) {
-            console.error('Error deleting expense:', error);
+        if (!expenseId) {
+            console.error("Expense ID is undefined");
+            return;
         }
-    } else {
-        // If the user cancels the deletion
-        console.log('User canceled the deletion.');
-    }
-});
+        const userConfirmed = confirm("Are you sure you want to delete this expense?");
 
-        });
-    } catch (error) {
-        console.error('Error:', error);
-    }
+        if (userConfirmed) {
+            try {
+                const response = await fetch(`/api/delete-expense/${expenseId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
 
-
-    
+                if (!response.ok) {
+                    throw new Error('Failed to delete expense');
+                }
+                tableBody.removeChild(row);
+                alert('Expense deleted successfully!');
+            } catch (error) {
+                console.error('Error deleting expense:', error);
+            }
+        } else {
+            console.log('User canceled the deletion.');
+        }
+    });
+            });
+        } catch (error) {
+            console.error('Error:', error);
+        }    
 });
 
 

@@ -220,12 +220,6 @@ nav a:hover {
 }
 
 
-
-
-
-
-
-/* Example of inline layout for shorter appearance */
 .form-group {
     display: flex;
     gap: 10px;
