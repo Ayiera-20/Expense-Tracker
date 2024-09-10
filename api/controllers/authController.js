@@ -1,11 +1,40 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
+const validator = require('validator'); 
+
+
+function validatePassword(password) {
+    const minLength = 8;
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/g;
+    const hasNumber = /\d/;
+
+    if (password.length < minLength) {
+        return { valid: false, message: "Password must be at least 8 characters long." };
+    }
+
+    if (!hasSpecialChar.test(password)) {
+        return { valid: false, message: "Password must include at least one special character." };
+    }
+
+    if (!hasNumber.test(password)) {
+        return { valid: false, message: "Password must include at least one number." };
+    }
+
+    return { valid: true };
+}
+
 
 const authController = {
     // Register method
     register: async (req, res) => {
         try {
             const { username, email, password } = req.body;
+            
+            const passwordValidation = validatePassword(password);
+            if (!passwordValidation.valid) {
+                return res.status(400).json({ message: passwordValidation.message });
+            }
+
             const hashedPassword = await bcrypt.hash(password, 10);
     
             // Use async/await for User.create

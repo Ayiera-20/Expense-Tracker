@@ -250,3 +250,9 @@ nav a:hover {
 }
 
 
+#password-message{
+    color: red;
+    font-size: small;
+    margin-top: 1px;
+}
+

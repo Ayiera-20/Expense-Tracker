@@ -40,3 +40,27 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+document.getElementById('password').addEventListener('input', function (e) {
+    const password = e.target.value;
+    const message = document.getElementById('password-message');
+    const minLength = 8;
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/g;
+    const hasNumber = /\d/;
+
+    let validationMessage = '';
+
+    if (password.length < minLength) {
+    validationMessage += 'Password must be at least 8 characters long. ';
+    }
+
+    if (!hasSpecialChar.test(password)) {
+    validationMessage += 'Password must include at least one special character. ';
+    }
+
+    if (!hasNumber.test(password)) {
+    validationMessage += 'Password must include at least one number. ';
+    }
+
+    message.textContent = validationMessage || 'Password looks good!';
+});
