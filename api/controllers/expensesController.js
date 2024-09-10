@@ -128,7 +128,7 @@ deleteExpense: async (req, res) => {
 
         // Check if the expense exists and belongs to the user
         const [expenseResult] = await db.query(
-            'SELECT expense_id FROM expenses WHERE expense_id = ? AND user_id = ?',
+            'SELECT category_id, payment_method_id FROM expenses WHERE expense_id = ? AND user_id = ?',
             [expenseId, userId]
         );
 
@@ -136,8 +136,28 @@ deleteExpense: async (req, res) => {
             return res.status(404).json({ message: 'Expense not found' });
         }
 
+        const { category_id, payment_method_id } = expenseResult[0];
+
         // Delete the expense
         await db.query('DELETE FROM expenses WHERE expense_id = ? AND user_id = ?', [expenseId, userId]);
+
+        const [categoryUsage] = await db.query(
+            'SELECT COUNT(*) AS count FROM expenses WHERE category_id = ? AND user_id = ?',
+            [category_id, userId]
+        );
+
+        if (categoryUsage[0].count === 0) {
+            await db.query('DELETE FROM categories WHERE category_id = ? AND user_id = ?', [category_id, userId]);
+        }
+
+        const [paymentMethodUsage] = await db.query(
+            'SELECT COUNT(*) AS count FROM expenses WHERE payment_method_id = ? AND user_id = ?',
+            [payment_method_id, userId]
+        );
+
+        if (paymentMethodUsage[0].count === 0) {
+            await db.query('DELETE FROM payment_methods WHERE payment_method_id = ? AND user_id = ?', [payment_method_id, userId]);
+        }
 
         res.status(200).json({ message: 'Expense deleted successfully' });
     } catch (error) {
