@@ -1,36 +1,28 @@
 const db = require('../config/dbconfig');  
 
 const expensesController = {
-    // Add an expense
-    addExpense: async (req, res) => {
+        addExpense: async (req, res) => {
         try {
             const { date, category, amount, paymentMethod, description } = req.body;
 
-            // Insert category logic (if it doesn't exist already)
+            // Insert category logic
             const [categoryResult] = await db.query(
                 'INSERT INTO categories (category_name, user_id) VALUES (?, ?) ON DUPLICATE KEY UPDATE category_name=category_name',
                 [category, req.session.userId]
             );
-            const categoryId = categoryResult.insertId || (await db.query(
-                'SELECT category_id FROM categories WHERE category_name = ? AND user_id = ?',
-                [category, req.session.userId]
-            ))[0].category_id;
+
+            const categoryId = categoryResult.insertId;
 
             // Insert payment method logic (if it doesn't exist already)
-            await db.query(
+            const [paymentMethodResult] =await db.query(
                 'INSERT INTO payment_methods (payment_method_name, user_id) VALUES (?, ?) ON DUPLICATE KEY UPDATE payment_method_name=payment_method_name',
                 [paymentMethod, req.session.userId]
-            );
-
-            // Fetch the payment method ID after insertion or update
-            const [paymentMethodResult] = await db.query(
-                'SELECT payment_method_id FROM payment_methods WHERE payment_method_name = ? AND user_id = ?',
-                [paymentMethod, req.session.userId]
-            );
-            const paymentMethodId = paymentMethodResult[0].payment_method_id;
+                );
+            
+                const paymentMethodId= paymentMethodResult.insertId
 
             // Insert expense logic
-            await db.query(
+            const [expenseResult] = await db.query(
                 'INSERT INTO expenses (user_id, category_id, payment_method_id, amount, date, description) VALUES (?, ?, ?, ?, ?, ?)',
                 [req.session.userId, categoryId, paymentMethodId, amount, date, description]
             );
@@ -170,6 +162,9 @@ deleteExpense: async (req, res) => {
 
 
 module.exports = expensesController;
+
+
+
 
 
 

@@ -21,7 +21,10 @@ app.use(session({
     secret: 'your-secret-key',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true, httpOnly: true }
+    cookie: { 
+        secure: process.env.NODE_ENV === 'production', 
+        httpOnly: true 
+    }
 }));
 
 

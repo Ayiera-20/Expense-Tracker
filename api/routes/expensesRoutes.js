@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const expensesController = require('../controllers/expensesController');  // Import the controller
+const expensesController = require('../controllers/expensesController'); 
 
 // Routes for expense management
 router.post('/api/expenses', expensesController.addExpense);
