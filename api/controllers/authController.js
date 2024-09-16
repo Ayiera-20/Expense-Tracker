@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
 const validator = require('validator'); 
+const jwt = require('jsonwebtoken');
 
 
 function validatePassword(password) {
@@ -45,6 +46,9 @@ const authController = {
             res.status(400).json({ message: 'Error registering new user', error });
         }
     },
+
+    // Login
+
     
     login: async (req, res) => {
         try {
@@ -58,6 +62,12 @@ const authController = {
             const match = await bcrypt.compare(password, user.password);
             if (match) {
                 req.session.userId = user.id;
+                console.log('Session after login:', req.session); 
+                const token = jwt.sign(
+                    { userId: user.id, username: user.username },   
+                    process.env.JWT_SECRET,                        
+                    { expiresIn: '1h' }                            
+                );
                 res.json({ message: 'Logged in successfully' });
             } else {
                 res.status(400).json({ message: 'Invalid credentials' });
