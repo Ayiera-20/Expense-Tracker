@@ -57,11 +57,9 @@ const expensesController = {
 // Update expense
 updateExpense: async (req, res) => {
     try {
-        const { expenseId } = req.params; // Get expenseId from request params
+        const { expenseId } = req.params; 
         const { date, category_name, amount, payment_method_name, description } = req.body;
         const userId = req.session.userId;
-        // Log incoming data for debugging
-        console.log('Request data:', { expenseId, date, category_name, amount, payment_method_name, description });
 
         // Check if all necessary data is provided
         if (!expenseId || !date || !category_name || !amount || !payment_method_name || !description) {
@@ -112,7 +110,7 @@ updateExpense: async (req, res) => {
 // Delete expense
 deleteExpense: async (req, res) => {
     try {
-        const { expenseId } = req.params; // Get expenseId from request params
+        const { expenseId } = req.params; 
         const userId = req.session.userId; 
         if (!userId) {
             return res.status(401).json({ message: 'User not authenticated' });

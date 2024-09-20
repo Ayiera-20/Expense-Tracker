@@ -48,8 +48,6 @@ const authController = {
     },
 
     // Login
-
-    
     login: async (req, res) => {
         try {
             const { username, password } = req.body;

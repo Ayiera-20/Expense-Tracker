@@ -12,11 +12,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Iterate over the expenses and create rows dynamically
         expenses.forEach(expense => {
             const row = document.createElement('tr');
-            console.log('Row', row)
 
             // Store expense_id as a data attribute in the row
             row.dataset.expenseId = expense.expense_id;
-            console.log(row.dataset.expenseId);
             row.innerHTML = `
                 <td><input type="date" data-name='date' value="${new Date(expense.date).toISOString().split('T')[0]}" /></td>
                 <td><input type="text" data-name='category_name' value="${expense.category_name}" /></td>
@@ -44,8 +42,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             updateButton.addEventListener('click', async () => {
 
                 const expenseId = row.dataset.expenseId;
-
-                console.log('ID', expenseId)
             
                 if (!expenseId) {
                     console.error("Expense ID is undefined");
@@ -58,10 +54,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     payment_method_name: row.querySelector('input[data-name="payment_method_name"]').value,
                     description: row.querySelector('input[data-name="description"]').value,
                 };
-                
-
-                 // Before making the fetch request, log the payload to check its content
-                console.log('Payload to send:', JSON.stringify(updatedExpense));
             
                 fetch(`/api/update-expense/${expenseId}`, {
                     method: 'PUT',
