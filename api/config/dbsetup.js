@@ -4,21 +4,19 @@ const db = require('./dbconfig');
 const createDatabaseAndTables = async () => {
     try {
         // Create the database
-        await db.query('CREATE DATABASE IF NOT EXISTS expense_tracker');
-        console.log("Database: expense_tracker successfully created");
+        // await db.query('CREATE DATABASE IF NOT EXISTS expense_tracker');
+        // console.log("Database: expense_tracker successfully created");
 
-        // Switch to the newly created database
-        await db.query('USE expense_tracker');
-        console.log("Database changed");
+        // // Switch to the newly created database
+        // await db.query('USE expense_tracker');
+        // console.log("Database changed");
 
         // Create the users table
         const userTableQuery = `CREATE TABLE IF NOT EXISTS users (
             id INT AUTO_INCREMENT PRIMARY KEY,
             email VARCHAR(100) NOT NULL UNIQUE,
             username VARCHAR(50) NOT NULL UNIQUE,
-            password VARCHAR(255) NOT NULL,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+            password VARCHAR(255) NOT NULL
         )`;
         await db.query(userTableQuery);
         console.log("Users table successfully created");
@@ -29,7 +27,6 @@ const createDatabaseAndTables = async () => {
             user_id INT,
             category_name VARCHAR(50) NOT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             FOREIGN KEY (user_id) REFERENCES users(id)
         )`;
         await db.query(categoriesTableQuery);
@@ -41,7 +38,6 @@ const createDatabaseAndTables = async () => {
             user_id INT,
             payment_method_name VARCHAR(50) NOT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             FOREIGN KEY (user_id) REFERENCES users(id)
         )`;
         await db.query(paymentmethodsTableQuery);
@@ -57,7 +53,6 @@ const createDatabaseAndTables = async () => {
             date DATE NOT NULL,
             description TEXT,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             FOREIGN KEY (user_id) REFERENCES users(id),
             FOREIGN KEY (category_id) REFERENCES categories(category_id),
             FOREIGN KEY (payment_method_id) REFERENCES payment_methods(payment_method_id)
@@ -75,7 +70,6 @@ const createDatabaseAndTables = async () => {
             start_date DATE NOT NULL,
             end_date DATE NOT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             FOREIGN KEY (user_id) REFERENCES users(id),
             FOREIGN KEY (category_id) REFERENCES categories(category_id)
         )`;
