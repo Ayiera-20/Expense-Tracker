@@ -12,6 +12,10 @@ const authRoutes = require('./routes/authRoutes');
 const expensesRoutes = require('./routes/expensesRoutes'); 
 
 
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'public', 'welcome.html'));
+});
+
 // middlewares
 app.use(express.json());
 app.use(cors());
@@ -36,10 +40,6 @@ app.use(pagesRoutes);
 createDatabaseAndTables();
 
 
-// Basic route
-app.get('', (req, res) => {
-    res.send("Hello World");
-});
 
 // Start server
 const port = process.env.PORT || 4000;
