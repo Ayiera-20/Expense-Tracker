@@ -74,8 +74,21 @@ const authController = {
             console.error('Error logging in user:', error);
             res.status(500).json({ message: 'Error logging in user', error });
         }
-    }
+    },
     
+
+    // Logout method
+    logout: (req, res) => {
+        req.session.destroy((err) => {
+            if (err) {
+                return res.status(500).json({ message: 'Error while logging out' });
+            }
+            res.clearCookie('connect.sid');  
+            res.redirect('/welcome');        
+        });
+    }
 };
+
+
 
 module.exports = authController;

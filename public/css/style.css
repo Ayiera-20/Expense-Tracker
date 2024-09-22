@@ -129,6 +129,10 @@ nav a:hover {
     margin-left: 20px; 
 }
 
+.signout-btn {
+    margin-left: 800px;
+}
+
 .nav-btn:hover {
     background-color: rgb(164, 2, 2);
     color: white;
