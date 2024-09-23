@@ -3,7 +3,10 @@ const app = express();
 const session = require('express-session');
 const cors = require('cors');
 const path = require('path');
-const { createDatabaseAndTables } = require('./config/dbsetup');
+const MySQLStore = require('express-mysql-session')(session);
+// const { createDatabaseAndTables } = require('./config/dbsetup');
+
+require('dotenv').config();
 
 
 // Import routes
@@ -21,10 +24,20 @@ app.use(express.json());
 app.use(cors());
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
+const sessionStore = new MySQLStore({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    port: process.env.DB_PORT || 3306
+});
+
+
 app.use(session({
     secret: 'your-secret-key',
     resave: false,
     saveUninitialized: true,
+    store: sessionStore,
     cookie: { 
         secure: process.env.NODE_ENV === 'production', 
         httpOnly: true 
