@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const session = require('express-session');
 const path = require('path');
-const cors = require('cors');
+
 const MySQLStore = require('express-mysql-session')(session);
 // const { createDatabaseAndTables } = require('./config/dbsetup');
 
@@ -23,22 +23,6 @@ app.get('/', (req, res) => {
 // middlewares
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', 'public')));
-
-const allowedOrigins = ['http://localhost:3000', 'https://expensetracker-1znou0sa.b4a.run/'];
-
-app.use(cors({
-    origin: function (origin, callback) {
-        if (allowedOrigins.includes(origin) || !origin) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    credentials: true
-}));
-
-
-
 
 const sessionStore = new MySQLStore({
     host: process.env.DB_HOST,
