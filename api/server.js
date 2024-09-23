@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
-const allowedOrigins = ['http://localhost:3000', 'https://myappfrontend.com'];
+const allowedOrigins = ['http://localhost:3000', 'https://expensetracker-1znou0sa.b4a.run/'];
 
 app.use(cors({
     origin: function (origin, callback) {
