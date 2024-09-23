@@ -24,7 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(expenseData)
+                body: JSON.stringify(expenseData),
+                credentials: 'include'
             });
 
             if (response.ok) {
