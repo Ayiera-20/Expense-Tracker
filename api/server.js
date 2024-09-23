@@ -37,7 +37,7 @@ app.use(expensesRoutes);
 app.use(pagesRoutes);
 
 
-createDatabaseAndTables();
+// createDatabaseAndTables();
 
 
 
