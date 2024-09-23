@@ -40,7 +40,8 @@ app.use(session({
     store: sessionStore,
     cookie: { 
         secure: process.env.NODE_ENV === 'production', 
-        httpOnly: true 
+        httpOnly: true,
+        maxAge: 3600000
     }
 }));
 
