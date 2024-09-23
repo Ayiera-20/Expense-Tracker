@@ -3,6 +3,10 @@ const db = require('../config/dbconfig');
 const expensesController = {
         addExpense: async (req, res) => {
         try {
+            if (!req.session.userId) {
+                return res.status(401).json({ message: 'User not authenticated' });
+            }
+            
             const { date, category, amount, paymentMethod, description } = req.body;
 
             // Insert category logic
