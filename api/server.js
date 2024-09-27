@@ -41,9 +41,12 @@ app.use(session({
     cookie: { 
         secure: process.env.NODE_ENV === 'production', 
         httpOnly: true,
-        maxAge: 3600000
-    }
+        maxAge: 24 * 60 * 60 * 1000
+    },
+    store: new session.MemoryStore(),
 }));
+
+app.set('trust proxy', 1);
 
 
 app.use('/api/auth', authRoutes);

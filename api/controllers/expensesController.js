@@ -12,6 +12,7 @@ const expensesController = {
                 [category, req.session.userId]
             );
 
+
             const categoryId = categoryResult.insertId;
 
             // Insert payment method logic (if it doesn't exist already)
@@ -94,11 +95,18 @@ updateExpense: async (req, res) => {
         
         const paymentMethodId = paymentMethodResult[0].payment_method_id;
 
+        console.log('Updating expense:', date, categoryId, amount, paymentMethodId, description, expenseId, userId);
+
+
         // Update the expense
-        await db.query(
+        const [result] = await db.query(
             'UPDATE expenses SET date = ?, category_id = ?, amount = ?, payment_method_id = ?, description = ? WHERE expense_id = ? AND user_id = ?',
             [date, categoryId, amount, paymentMethodId, description, expenseId, userId]
         );
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: 'No expenses were updated' });
+        }
 
         res.status(200).json({ message: 'Expense updated successfully' });
     } catch (error) {
