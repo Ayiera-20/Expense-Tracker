@@ -2,8 +2,10 @@ const express = require('express');
 const app = express();
 const session = require('express-session');
 const path = require('path');
+const pgSession = require('connect-pg-simple')(session);
+const pool = require('./config/dbconfig');
 
-const MySQLStore = require('express-mysql-session')(session);
+// const MySQLStore = require('express-mysql-session')(session);
 // const { createDatabaseAndTables } = require('./config/dbsetup');
 
 require('dotenv').config();
@@ -24,13 +26,19 @@ app.get('/', (req, res) => {
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
-const sessionStore = new MySQLStore({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    port: process.env.DB_PORT || 3306
+// const sessionStore = new MySQLStore({
+//     host: process.env.DB_HOST,
+//     user: process.env.DB_USER,
+//     password: process.env.DB_PASSWORD,
+//     database: process.env.DB_NAME,
+//     port: process.env.DB_PORT || 3306
+// });
+
+
+const sessionStore = new pgSession({
+    pool: pool,  // Pass the pool object for session storage
 });
+
 
 
 app.use(session({
@@ -43,10 +51,8 @@ app.use(session({
         httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000
     },
-    store: new session.MemoryStore(),
 }));
 
-app.set('trust proxy', 1);
 
 
 app.use('/api/auth', authRoutes);
@@ -59,7 +65,7 @@ app.use(pagesRoutes);
 
 
 // Start server
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 5432;
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
