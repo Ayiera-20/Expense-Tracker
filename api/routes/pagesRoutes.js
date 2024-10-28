@@ -15,7 +15,7 @@ router.get('/login', (req, res) => {
 
 // Route for serving the home page
 router.get('/home', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', '..', 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, '..', '..', 'public', 'home.html'));
 });
 
 // Route for serving the welcome page
