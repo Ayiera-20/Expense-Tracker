@@ -2,7 +2,10 @@ const { Pool } = require('pg');
 require('dotenv').config();
 
 const pool = new Pool({
-    connectionString: process.env.POSTGRES_URL,  // Ensure this is defined in your .env file
+    connectionString: process.env.POSTGRES_URL, 
+    ssl: {
+        rejectUnauthorized: false 
+    }
 });
 
 // Test the PostgreSQL connection
