@@ -38,13 +38,21 @@ const authController = {
 
             const hashedPassword = await bcrypt.hash(password, 10);
     
-            // Use async/await for User.create
-            await User.create({ username, email, password: hashedPassword });
-            res.status(201).json({ message: 'User created successfully' });
-        } catch (error) {
-            console.error('Error registering new user:', error);
-            res.status(400).json({ message: 'Error registering new user', error });
-        }
+        //     // Use async/await for User.create
+        //     await User.create({ username, email, password: hashedPassword });
+        //     res.status(201).json({ message: 'User created successfully' });
+        // } catch (error) {
+        //     console.error('Error registering new user:', error);
+        //     res.status(400).json({ message: 'Error registering new user', error });
+        // }
+
+        // Use async/await for User.create
+        await User.create({ username, email, password: hashedPassword });
+        res.status(201).json({ message: 'User created successfully' });
+    } catch (error) {
+        console.error('Error registering new user:', error);
+        res.status(400).json({ message: 'Error registering new user', error });
+    }
     },
 
     // Login
