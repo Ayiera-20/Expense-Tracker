@@ -1,15 +1,17 @@
 const db = require('./dbconfig');
+require('dotenv').config();
+console.log(process.env.DB_USER);
 
 // Use async/await for the database creation queries
 const createDatabaseAndTables = async () => {
     try {
         // Create the database
-        // await db.query('CREATE DATABASE IF NOT EXISTS expense_tracker');
-        // console.log("Database: expense_tracker successfully created");
+        await db.query('CREATE DATABASE IF NOT EXISTS railway');
+        console.log("Database: railway successfully created");
 
-        // // Switch to the newly created database
-        // await db.query('USE expense_tracker');
-        // console.log("Database changed");
+        // Switch to the newly created database
+        await db.query('USE railway');
+        console.log("Database changed");
 
         // Create the users table
         const userTableQuery = `CREATE TABLE IF NOT EXISTS users (
