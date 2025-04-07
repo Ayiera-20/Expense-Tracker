@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const session = require('express-session');
 const path = require('path');
-
+const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 // const { createDatabaseAndTables } = require('./config/dbsetup');
 
@@ -33,18 +33,25 @@ const sessionStore = new MySQLStore({
 });
 
 
+// app.use(session({
+//     secret: 'your-secret-key',
+//     resave: false,
+//     saveUninitialized: true,
+//     store: sessionStore,
+//     cookie: { 
+//         secure: process.env.NODE_ENV === 'production', 
+//         httpOnly: true,
+//         maxAge: 24 * 60 * 60 * 1000
+//     },
+//     store: new session.MemoryStore(),
+// }));
+
 app.use(session({
-    secret: 'your-secret-key',
-    resave: false,
-    saveUninitialized: true,
+    secret: 'yourSecret',
     store: sessionStore,
-    cookie: { 
-        secure: process.env.NODE_ENV === 'production', 
-        httpOnly: true,
-        maxAge: 24 * 60 * 60 * 1000
-    },
-    store: new session.MemoryStore(),
-}));
+    resave: false,
+    saveUninitialized: false
+  }));
 
 app.set('trust proxy', 1);
 
